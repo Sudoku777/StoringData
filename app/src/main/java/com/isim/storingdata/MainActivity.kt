@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var sharedPref: SharedPreferences
+    var ageFromPref: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +25,15 @@ class MainActivity : AppCompatActivity() {
         //SharedPreferences - XML - Key - Value
         sharedPref = this.getSharedPreferences("com.isim.storingdata", Context.MODE_PRIVATE)
 
-        val userAgePref = sharedPref.getInt("age", -1)
-        if (userAgePref == -1) {
+        ageFromPref = sharedPref.getInt("age", -1)
+        if (ageFromPref == -1) {
             binding.txtAge.text = "Your Age: "
         } else {
-            binding.txtAge.text = "Your Age: ${userAgePref}"
+            binding.txtAge.text = "Your Age: ${ageFromPref}"
         }
     }
 
-    fun add(viwe: View) {
+    fun add(view: View) {
         binding.button1.setOnClickListener {
             val myAge = binding.edtText.text.toString().toIntOrNull()
 
@@ -46,8 +47,8 @@ class MainActivity : AppCompatActivity() {
 
     fun delete(view: View) {
         binding.button2.setOnClickListener {
-            val userAgePref = sharedPref.getInt("age", -1)
-            if (userAgePref != -1) {
+            ageFromPref = sharedPref.getInt("age", -1)
+            if (ageFromPref != -1) {
                 sharedPref.edit().remove("age").apply()
                 binding.txtAge.text = "Your age: "
             }
